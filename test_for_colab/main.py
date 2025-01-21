@@ -1,36 +1,19 @@
-import pandas as pd
-from test_for_colab.output import output
-from dotenv import load_dotenv
-import os
 import sys
-from test_for_colab.load_csv import load_csv_files
-
+import pandas as pd
 
 def main():
-  # `sys.argv[1:]` で渡されたすべてのCSVファイルのパスを取得
-  csv_files = sys.argv[1:]
-  if not csv_files:
-    print("⚠️ CSVファイルが指定されていません")
-    return
+    args = sys.argv[1:]  # TEMPLATE_ID, CSVファイルのペアを取得
+    if len(args) % 2 != 0:
+        print("❌ 引数の数が正しくありません")
+        return
 
-  print(f"📂 処理対象のCSVファイル: {csv_files}")
+    for i in range(0, len(args), 2):
+        template_id = args[i]
+        csv_path = args[i + 1]
+        df = pd.read_csv(csv_path)
 
-  # CSVをDataFrameに変換
-  data_dict = load_csv_files(csv_files)
-
-  # 確認用: 各DataFrameの情報を表示
-  for file_name, df in data_dict.items():
-    print(f"\n📄 {file_name}:")
-    print(df.info())  # DataFrameの情報を表示
-    print(df.head())  # 最初の5行を表示
-  
-  load_dotenv("./config/.env")
-  
-  ENV = os.getenv("INDEX")
-  
-  print(f"ENV:{ENV}")
-  
-  output()
+        print(f"\n📄 TEMPLATE_ID: {template_id}, ファイル: {csv_path}")
+        print(df.head())  # 先頭5行を表示
 
 if __name__ == "__main__":
-  main()
+    main()
