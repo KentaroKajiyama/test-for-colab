@@ -9,8 +9,13 @@ readme = "README.md"
 python = "^3.10"
 pandas = "^2.2.3"
 python-dotenv = "^1.0.1"
+numpy = "^2.2.2"
+rich = "^13.9.4"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+start = "test_for_colab.main:main"
